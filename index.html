@@ -1,0 +1,29 @@
+<div id="welcome-popup" class="overlay">
+    <div class="popup-content">
+        <button class="close-btn" onclick="closeWelcome()">&times;</button>
+        <h2>Welcome!</h2>
+        <video id="intro-video" controls>
+            <source src="videos/intro.mp4" type="video/mp4">
+        </video>
+    </div>
+</div>
+
+<main id="home-page" style="display:none;">
+    <h1>Content Home</h1>
+    
+    <section id="section-1">
+        <h3>Welcome and Good Luck</h3>
+        <ul>
+            <li onclick="openVideo('videos/v1.mp4')">Intro Video 1</li>
+            <li onclick="openVideo('videos/v2.mp4')">Intro Video 2</li>
+        </ul>
+    </section>
+
+    </main>
+
+<div id="video-overlay" class="overlay" style="display:none;">
+    <div class="popup-content">
+        <button class="close-btn" onclick="closeVideo()">&times;</button>
+        <video id="main-player" controls autoplay></video>
+    </div>
+</div>
