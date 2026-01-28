@@ -1,53 +1,128 @@
-<main id="home-page" style="display:none;">
-    <header>
-        <h1>Video Guides</h1>
-    </header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Guide PWA</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        
+        /* Popups */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
 
-    <section class="video-section">
-        <h3>Welcome and Good Luck</h3>
-        <div class="video-grid">
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        video { width: 100%; border-radius: 8px; }
+
+        /* Content Tiles */
+        .video-section { margin-bottom: 20px; }
+        .video-tile {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 5px solid #007bff;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-popup" class="overlay">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closeWelcome()">&times;</button>
+            <h2>Welcome!</h2>
+            <video id="intro-video" controls>
+                <source src="Introduction.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <div id="home-page" style="display:none;">
+        <h1>Scripture App Guides</h1>
+        
+        <div class="video-section">
+            <h3>Welcome and Good Luck</h3>
             <div class="video-tile" onclick="openVideo('Introduction.mp4')">Introduction</div>
             <div class="video-tile" onclick="openVideo('Outtro.mp4')">Good Bye</div>
         </div>
-    </section>
-
-    <section class="video-section">
-        <h3>Navigating the App</h3>
-        <div class="video-grid">
-            <div class="video-tile" onclick="openVideo('1HowToNav_A.mp4')">Home Page and Bookmark Page</div>
-            <div class="video-tile" onclick="openVideo('1HowToNav_B.mp4')">Home Page Features</div>
+        
         </div>
-    </section>
 
-    <section class="video-section">
-        <h3>Searching the Standard Works</h3>
-        <div class="video-grid">
-            <div class="video-tile" onclick="openVideo('2HowToSearch_A.mp4')">Searching for a Word/Phrase</div>
-            <div class="video-tile" onclick="openVideo('2HowToSearch_B.mp4')">Searching for a Reference</div>
+    <div id="video-overlay" class="overlay" style="display:none;">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closeVideo()">&times;</button>
+            <video id="main-player" controls autoplay></video>
         </div>
-    </section>
+    </div>
 
-    <section class="video-section">
-        <h3>Saving Scriptures with Bookmarks</h3>
-        <div class="video-grid">
-            <div class="video-tile" onclick="openVideo('3SavingForLater_A.mp4')">Saving a Verse</div>
-            <div class="video-tile" onclick="openVideo('3SavingForLater_A.mp4')">Saving Multiple Verses</div>
-        </div>
-    </section>
+    <script>
+        // Check if the user has been here before
+        window.onload = function() {
+            const hasVisited = localStorage.getItem("pwaVisited");
+            const welcome = document.getElementById('welcome-popup');
+            const home = document.getElementById('home-page');
 
-    <section class="video-section">
-        <h3>Viewing Chapter and Saved Verses</h3>
-        <div class="video-grid">
-            <div class="video-tile" onclick="openVideo('4ViewingChaptersNBookmarks_A.mp4')">Viewing a Chapter</div>
-            <div class="video-tile" onclick="openVideo('4ViewingChaptersNBookmarks_B.mp4')">Viewing and Managing Bookmarks</div>
-        </div>
-    </section>
+            if (hasVisited === "true") {
+                welcome.style.display = 'none';
+                home.style.display = 'block';
+            }
+        };
 
-    <section class="video-section">
-        <h3>Troubleshooting and Warnings</h3>
-        <div class="video-grid">
-            <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_A.mp4')">Troubleshooting iOS</div>
-            <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_B.mp4')">Troubleshooting Android</div>
-        </div>
-    </section>
-</main>
+        function closeWelcome() {
+            localStorage.setItem("pwaVisited", "true");
+            document.getElementById('welcome-popup').style.display = 'none';
+            document.getElementById('home-page').style.display = 'block';
+            document.getElementById('intro-video').pause();
+        }
+
+        function openVideo(file) {
+            const overlay = document.getElementById('video-overlay');
+            const player = document.getElementById('main-player');
+            player.src = file;
+            overlay.style.display = 'flex';
+        }
+
+        function closeVideo() {
+            const overlay = document.getElementById('video-overlay');
+            const player = document.getElementById('main-player');
+            player.pause();
+            overlay.style.display = 'none';
+        }
+
+        // Auto-close welcome if video finishes
+        document.getElementById('intro-video').onended = closeWelcome;
+    </script>
+</body>
+</html>
