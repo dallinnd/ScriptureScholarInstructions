@@ -1,29 +1,53 @@
-<div id="welcome-popup" class="overlay">
-    <div class="popup-content">
-        <button class="close-btn" onclick="closeWelcome()">&times;</button>
-        <h2>Welcome!</h2>
-        <video id="intro-video" controls>
-            <source src="videos/intro.mp4" type="video/mp4">
-        </video>
-    </div>
-</div>
-
 <main id="home-page" style="display:none;">
-    <h1>Content Home</h1>
-    
-    <section id="section-1">
+    <header>
+        <h1>Video Guides</h1>
+    </header>
+
+    <section class="video-section">
         <h3>Welcome and Good Luck</h3>
-        <ul>
-            <li onclick="openVideo('videos/v1.mp4')">Intro Video 1</li>
-            <li onclick="openVideo('videos/v2.mp4')">Intro Video 2</li>
-        </ul>
+        <div class="video-grid">
+            <div class="video-tile" onclick="openVideo('Introduction.mp4')">Introduction</div>
+            <div class="video-tile" onclick="openVideo('Outtro.mp4')">Good Bye</div>
+        </div>
     </section>
 
-    </main>
+    <section class="video-section">
+        <h3>Navigating the App</h3>
+        <div class="video-grid">
+            <div class="video-tile" onclick="openVideo('1HowToNav_A.mp4')">Home Page and Bookmark Page</div>
+            <div class="video-tile" onclick="openVideo('1HowToNav_B.mp4')">Home Page Features</div>
+        </div>
+    </section>
 
-<div id="video-overlay" class="overlay" style="display:none;">
-    <div class="popup-content">
-        <button class="close-btn" onclick="closeVideo()">&times;</button>
-        <video id="main-player" controls autoplay></video>
-    </div>
-</div>
+    <section class="video-section">
+        <h3>Searching the Standard Works</h3>
+        <div class="video-grid">
+            <div class="video-tile" onclick="openVideo('2HowToSearch_A.mp4')">Searching for a Word/Phrase</div>
+            <div class="video-tile" onclick="openVideo('2HowToSearch_B.mp4')">Searching for a Reference</div>
+        </div>
+    </section>
+
+    <section class="video-section">
+        <h3>Saving Scriptures with Bookmarks</h3>
+        <div class="video-grid">
+            <div class="video-tile" onclick="openVideo('3SavingForLater_A.mp4')">Saving a Verse</div>
+            <div class="video-tile" onclick="openVideo('3SavingForLater_A.mp4')">Saving Multiple Verses</div>
+        </div>
+    </section>
+
+    <section class="video-section">
+        <h3>Viewing Chapter and Saved Verses</h3>
+        <div class="video-grid">
+            <div class="video-tile" onclick="openVideo('4ViewingChaptersNBookmarks_A.mp4')">Viewing a Chapter</div>
+            <div class="video-tile" onclick="openVideo('4ViewingChaptersNBookmarks_B.mp4')">Viewing and Managing Bookmarks</div>
+        </div>
+    </section>
+
+    <section class="video-section">
+        <h3>Troubleshooting and Warnings</h3>
+        <div class="video-grid">
+            <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_A.mp4')">Troubleshooting iOS</div>
+            <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_B.mp4')">Troubleshooting Android</div>
+        </div>
+    </section>
+</main>
