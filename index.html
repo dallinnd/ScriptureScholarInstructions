@@ -84,6 +84,7 @@
 
         .video-tile {
             background: var(--tile-bg);
+            color: #ffffff; 
             padding: 24px;
             border-radius: 12px;
             border-bottom: 4px solid var(--accent-red);
@@ -115,7 +116,7 @@
     </div>
 
     <div id="home-page" style="display:none;">
-        <h1 style="text-align: center; margin-bottom: 50px;">Scripture Scholar App Guide Library</h1>
+        <h1 style="text-align: center; margin-bottom: 50px;">Instructions for Scripture Scholar App</h1>
         
         <section class="video-section">
             <h3>Welcome</h3>
@@ -157,19 +158,20 @@
         </section>
 
         <section class="video-section">
-            <h3>5) Troubleshooting and Warnings</h3>
-            <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_A.mp4')">Troubleshooting iOS</div>
-                <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_B.mp4')">Troubleshooting Android</div>
-            </div>
-        </section>
-
-        <section class="video-section">
             <h3>Farewell</h3>
             <div class="video-grid">
                 <div class="video-tile" onclick="openVideo('Outtro.mp4')">Goodbye</div>
             </div>
         </section>
+
+        <section class="video-section">
+            <h3>Troubleshooting and Warnings</h3>
+            <div class="video-grid">
+                <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_A.mp4')">Troubleshooting iOS</div>
+                <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_B.mp4')">Troubleshooting Android</div>
+            </div>
+        </section>
+        
     </div>
 
     <div id="video-overlay" class="overlay" style="display:none;">
