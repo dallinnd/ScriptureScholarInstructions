@@ -35,6 +35,25 @@
     transform: translateX(5px);
 }
 
+div {
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-family: sans-serif;
+}
+
+.header {
+    font-size: 1.25rem;
+}
+
+ul {
+    list-style-type: decimal; /* Keeps your 1, 2, 3 numbering */
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
 .video-tile:active {
     transform: scale(0.98);
 }
