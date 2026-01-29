@@ -6,8 +6,9 @@
     <title>Scripture Guide PWA</title>
     <style>
         :root {
-            --accent-red: #2563eb;
+            --accent-blue: #2563eb;
             --tile-bg: #2563eb;
+            --hover-bg: #9e9d9d;
         }
 
         body { 
@@ -19,7 +20,7 @@
             line-height: 1.6;
         }
 
-        /* Black Overlay & Height Management */
+        /* Pure Black Overlay for Popups */
         .overlay {
             position: fixed;
             top: 0; left: 0; 
@@ -34,7 +35,7 @@
         .popup-content {
             position: relative;
             width: 90%;
-            max-width: 900px;
+            max-width: 450px; /* Portrait optimized width */
             max-height: 85vh;
             display: flex;
             flex-direction: column;
@@ -42,27 +43,20 @@
 
         .video-container {
             width: 100%;
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 9 / 16; /* Portrait Ratio */
             background: #000;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 0 40px rgba(0,0,0,0.5);
         }
 
-        /* Portrait mode adjustment for YouTube Shorts specifically */
-        .video-container.portrait {
-            aspect-ratio: 9 / 16;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        iframe, video { width: 100%; height: 100%; border: none; }
+        iframe, video { width: 100%; height: 100%; border: none; object-fit: cover; }
 
         .close-btn {
             position: absolute;
             top: -55px;
             right: 0;
-            background: var(--accent-red);
+            background: var(--accent-blue);
             color: white;
             border: none;
             border-radius: 50%;
@@ -73,33 +67,46 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(255, 77, 77, 0.3);
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
         }
 
-        /* Desktop Grid Layout */
+        /* Home Page Content Layout */
         #home-page { max-width: 1200px; margin: 0 auto; }
-        .video-section { margin-bottom: 50px; }
-        .video-section h3 { border-bottom: 1px solid #333; padding-bottom: 10px; color: #aaa; }
-        .video-grid { display: flex; flex-wrap: wrap; gap: 20px; padding-top: 15px; }
+        .video-section { margin-bottom: 50px; padding: 0 15px; }
+        .video-section h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; color: #333; }
+        
+        /* Welcome Text Styling */
+        .welcome-text-container { margin-bottom: 20px; width: 100%; }
+        .header { font-size: 1.25rem; font-weight: bold; margin-bottom: 15px; }
+        .description, .intro { margin-bottom: 15px; }
+        
+        ul { list-style-type: decimal; padding-left: 25px; margin: 15px 0; }
+        li { margin-bottom: 8px; display: list-item; }
+        hr { border: 0; border-top: 1px solid #111; margin: 10px 0; }
+
+        /* Video Tile Grid */
+        .video-grid { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 10px; clear: both; }
 
         .video-tile {
             background: var(--tile-bg);
-            color: #ffffff; 
-            padding: 24px;
+            color: #ffffff;
+            padding: 20px;
             border-radius: 30px;
-            border-bottom: 4px solid var(--accent-red);
             cursor: pointer;
-            flex: 1;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s ease;
             min-width: 280px;
             max-width: 380px;
-            text-align: center;
-            transition: 0.2s ease;
+            flex: 1;
         }
 
         .video-tile:hover {
-            background: #9e9d9d;
+            background: var(--hover-bg);
             transform: translateY(-4px);
         }
+
+        .video-tile:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -116,38 +123,32 @@
     </div>
 
     <div id="home-page" style="display:none;">
-         <h1 style="text-align: center; margin-bottom: 50px;">Instructions for Scripture Scholar App</h1>
+        <h1 style="text-align: center; margin-bottom: 50px;">Instructions for Scripture Scholar App</h1>
         
-         <section class="video-section">
+        <section class="video-section">
             <h3>Welcome</h3>
-        <div class="welcome-text-container">
-            <div class="header">
-                <strong>Welcome to the Scripture Scholar App</strong>
+            <div class="welcome-text-container">
+                <div class="header">Welcome to the Scripture Scholar App</div>
+                <div class="description">
+                    <p>The primary purpose of this app is to assist you in your study of the official Canon of the Church of Jesus Christ of Latter-day Saints, referred to as the Standard Works.</p>
+                </div>
+                <div class="intro">
+                    <p>The first four sections are divided into steps:</p>
+                </div>
+                <hr>
+                <div class="steps-list">
+                    <ul>
+                        <li>Navigating the App</li>
+                        <li>Searching the Standard Works</li>
+                        <li>Saving Scriptures with Bookmarks</li>
+                        <li>Viewing Chapters and Saved Verses</li>
+                    </ul>
+                </div>
+                <hr>
             </div>
-
-            <div class="description">
-                <p>The primary purpose of this app is to assist you in your study of the official Canon of the Church of Jesus Christ of Latter-day Saints, referred to as the Standard Works.</p>
+            <div class="video-grid">
+                <div class="video-tile" onclick="openVideo('https://www.youtube.com/shorts/m-zmU0yraZc')">Rewatch Introduction Video</div>
             </div>
-
-            <div class="intro">
-                <p>The first four sections are divided into steps:</p>
-            </div>
-
-            <hr> 
-            <div class="steps-list">
-                <ul>
-                    <li>Navigating the App</li>
-                    <li>Searching the Standard Works</li>
-                    <li>Saving Scriptures with Bookmarks</li>
-                    <li>Viewing Chapters and Saved Verses</li>
-                </ul>
-            </div>
-            <hr>
-        </div>
-
-        <div class="video-grid">
-            <div class="video-tile" onclick="openVideo('https://www.youtube.com/shorts/m-zmU0yraZc')">Rewatch Introduction Video</div>
-        </div>
         </section>
 
         <section class="video-section">
@@ -165,42 +166,11 @@
                 <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/3MtkdVabLXo')">Searching Reference</div>
             </div>
         </section>
-
-        <section class="video-section">
-            <h3>3) Saving Scriptures with Bookmarks</h3>
-            <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('3SavingForLater_A.mp4')">Saving a Verse</div>
-                <div class="video-tile" onclick="openVideo('3SavingForLater_B.mp4')">Saving Multiple Verses</div>
-            </div>
-        </section>
-
-        <section class="video-section">
-            <h3>4) Viewing Chapters and Saved Verses</h3>
-            <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('4ViewingChaptersNBookmarks_A.mp4')">Viewing a Chapter</div>
-                <div class="video-tile" onclick="openVideo('4ViewingChaptersNBookmarks_B.mp4')">Viewing/Managing Bookmarks</div>
-            </div>
-        </section>
-
-        <section class="video-section">
-            <h3>Farewell</h3>
-            <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('Outtro.mp4')">Goodbye</div>
-            </div>
-        </section>
-
-        <section class="video-section">
-            <h3>Troubleshooting and Warnings</h3>
-            <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_A.mp4')">Troubleshooting iOS</div>
-                <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_B.mp4')">Troubleshooting Android</div>
-            </div>
-        </section>
         
     </div>
 
     <div id="video-overlay" class="overlay" style="display:none;">
-        <div class="popup-content" id="popup-wrapper">
+        <div class="popup-content">
             <button class="close-btn" onclick="closeVideo()">×</button>
             <div class="video-container" id="main-video-container"></div>
         </div>
@@ -208,7 +178,7 @@
 
     <script>
         function init() {
-            const hasVisited = localStorage.getItem("pwa_user_v5");
+            const hasVisited = localStorage.getItem("pwa_guide_v1");
             if (hasVisited === "true") {
                 document.getElementById('welcome-popup').style.display = 'none';
                 document.getElementById('home-page').style.display = 'block';
@@ -216,7 +186,7 @@
         }
 
         function closeWelcome() {
-            localStorage.setItem("pwa_user_v5", "true");
+            localStorage.setItem("pwa_guide_v1", "true");
             document.getElementById('welcome-popup').style.display = 'none';
             document.getElementById('home-page').style.display = 'block';
             document.getElementById('intro-video').pause();
@@ -224,23 +194,12 @@
 
         function openVideo(url) {
             const container = document.getElementById('main-video-container');
-            const wrapper = document.getElementById('popup-wrapper');
-            
-            // Clear previous orientation classes
-            container.classList.remove('portrait');
-
             if (url.includes('youtube.com') || url.includes('youtu.be')) {
-                // Handling Shorts and Standard YT links
                 let videoId = url.split('v=')[1] || url.split('/').pop().split('?')[0];
-                
-                // Add portrait class if it's a Short for better Desktop viewing
-                if(url.includes('shorts')) container.classList.add('portrait');
-                
                 container.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
             } else {
-                container.innerHTML = `<video id="active-player" controls autoplay><source src="${url}" type="video/mp4"></video>`;
+                container.innerHTML = `<video controls autoplay><source src="${url}" type="video/mp4"></video>`;
             }
-            
             document.getElementById('video-overlay').style.display = 'flex';
         }
 
