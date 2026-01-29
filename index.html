@@ -20,7 +20,6 @@
             line-height: 1.6;
         }
 
-        /* Pure Black Overlay */
         .overlay {
             position: fixed;
             top: 0; left: 0; 
@@ -35,8 +34,8 @@
         .popup-content {
             position: relative;
             width: 90%;
-            max-width: 420px; /* Adjusted for portrait focus */
-            max-height: 80vh; /* Leave room for the close button */
+            max-width: 420px;
+            max-height: 80vh;
             display: flex;
             flex-direction: column;
         }
@@ -47,13 +46,11 @@
             background: #000;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* THE FIX: Changed from 'cover' to 'contain' to prevent clipping */
         iframe, video { 
             width: 100%; 
             height: 100%; 
@@ -77,11 +74,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
             z-index: 10002;
         }
 
-        /* Home Page Layout */
         #home-page { max-width: 1200px; margin: 0 auto; }
         .video-section { margin-bottom: 50px; padding: 0 15px; }
         .video-section h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; color: #333; }
@@ -165,6 +160,37 @@
                 <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/3MtkdVabLXo')">Searching Reference</div>
             </div>
         </section>
+
+        <section class="video-section">
+            <h3>3) Saving Scriptures with Bookmarks</h3>
+            <div class="video-grid">
+                <div class="video-tile" onclick="openVideo('3SavingForLater_A.mp4')">Saving a Verse</div>
+                <div class="video-tile" onclick="openVideo('3SavingForLater_B.mp4')">Saving Multiple Verses</div>
+            </div>
+        </section>
+
+        <section class="video-section">
+            <h3>4) Viewing Chapters and Saved Verses</h3>
+            <div class="video-grid">
+                <div class="video-tile" onclick="openVideo('4ViewingChaptersNBookmarks_A.mp4')">Viewing a Chapter</div>
+                <div class="video-tile" onclick="openVideo('4ViewingChaptersNBookmarks_B.mp4')">Viewing/Managing Bookmarks</div>
+            </div>
+        </section>
+
+        <section class="video-section">
+            <h3>Farewell</h3>
+            <div class="video-grid">
+                <div class="video-tile" onclick="openVideo('Outtro.mp4')">Goodbye</div>
+            </div>
+        </section>
+
+        <section class="video-section">
+            <h3>5) Troubleshooting and Warnings</h3>
+            <div class="video-grid">
+                <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_A.mp4')">Troubleshooting iOS</div>
+                <div class="video-tile" onclick="openVideo('5TroubleshootingNWarnings_B.mp4')">Troubleshooting Android</div>
+            </div>
+        </section>
     </div>
 
     <div id="video-overlay" class="overlay" style="display:none;">
@@ -176,7 +202,7 @@
 
     <script>
         function init() {
-            const hasVisited = localStorage.getItem("pwa_guide_v7");
+            const hasVisited = localStorage.getItem("pwa_guide_v8");
             if (hasVisited === "true") {
                 document.getElementById('welcome-popup').style.display = 'none';
                 document.getElementById('home-page').style.display = 'block';
@@ -184,7 +210,7 @@
         }
 
         function closeWelcome() {
-            localStorage.setItem("pwa_guide_v7", "true");
+            localStorage.setItem("pwa_guide_v8", "true");
             document.getElementById('welcome-popup').style.display = 'none';
             document.getElementById('home-page').style.display = 'block';
             document.getElementById('intro-video').pause();
