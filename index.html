@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Guide PWA</title>
+    <title>Scripture Guide PWA</title>
     <style>
         :root {
-            --accent-red: #8122e6;
-            --tile-bg: #222;
+            --accent-red: #ff4d4d;
+            --tile-bg: #1e1e1e;
         }
 
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
             background: #121212; 
-            color: white; 
+            color: #ffffff; 
             margin: 0; 
             padding: 40px; 
-            box-sizing: border-box;
+            line-height: 1.6;
         }
 
-        /* Pure Black Overlay - Fixed Height Issues */
+        /* Black Overlay & Height Management */
         .overlay {
             position: fixed;
             top: 0; left: 0; 
@@ -33,82 +33,71 @@
 
         .popup-content {
             position: relative;
-            width: 80%;
-            max-width: 1000px;
-            max-height: 90vh; /* Prevents exceeding screen height */
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
 
-        .popup-content video {
+        .video-container {
             width: 100%;
-            max-height: 80vh; /* Keeps video contained */
+            aspect-ratio: 16 / 9;
+            background: #000;
             border-radius: 8px;
-            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
         }
 
-        /* Red X Circle Button - Positioned better for Desktop */
+        /* Portrait mode adjustment for YouTube Shorts specifically */
+        .video-container.portrait {
+            aspect-ratio: 9 / 16;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        iframe, video { width: 100%; height: 100%; border: none; }
+
         .close-btn {
             position: absolute;
-            top: -20px;
-            right: -20px;
+            top: -55px;
+            right: 0;
             background: var(--accent-red);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 45px;
-            height: 45px;
+            width: 44px; height: 44px;
             cursor: pointer;
             font-size: 24px;
             font-weight: bold;
-            z-index: 10001;
-            transition: transform 0.2s;
-        }
-        .close-btn:hover { transform: scale(1.1); }
-
-        /* Main Content Layout */
-        #home-page {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .video-section {
-            margin-bottom: 40px;
-            border-top: 1px solid #333;
-            padding-top: 20px;
-        }
-
-        .video-section h3 {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            color: #ccc;
-        }
-
-        /* Horizontal Tile Grid */
-        .video-grid {
             display: flex;
-            flex-wrap: wrap; /* Allows tiles to wrap to next line if needed */
-            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(255, 77, 77, 0.3);
         }
+
+        /* Desktop Grid Layout */
+        #home-page { max-width: 1200px; margin: 0 auto; }
+        .video-section { margin-bottom: 50px; }
+        .video-section h3 { border-bottom: 1px solid #333; padding-bottom: 10px; color: #aaa; }
+        .video-grid { display: flex; flex-wrap: wrap; gap: 20px; padding-top: 15px; }
 
         .video-tile {
             background: var(--tile-bg);
-            padding: 20px;
+            padding: 24px;
             border-radius: 12px;
             border-bottom: 4px solid var(--accent-red);
             cursor: pointer;
-            flex: 1; /* Makes tiles grow to fill space */
-            min-width: 250px; /* Minimum width for each tile */
-            max-width: 350px; /* Maximum width for each tile */
+            flex: 1;
+            min-width: 280px;
+            max-width: 380px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: 0.2s ease;
         }
 
         .video-tile:hover {
-            background: #333;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            background: #252525;
+            transform: translateY(-4px);
         }
     </style>
 </head>
@@ -117,20 +106,22 @@
     <div id="welcome-popup" class="overlay">
         <div class="popup-content">
             <button class="close-btn" onclick="closeWelcome()">×</button>
-            <video id="intro-video" controls>
-                <source src="Introduction.mp4" type="video/mp4">
-            </video>
+            <div class="video-container">
+                <video id="intro-video" controls>
+                    <source src="Introduction.mp4" type="video/mp4">
+                </video>
+            </div>
         </div>
     </div>
 
     <div id="home-page" style="display:none;">
-        <h1 style="margin-bottom: 40px;">App Video Guides</h1>
+        <h1 style="text-align: center; margin-bottom: 50px;">Guide Library</h1>
         
         <section class="video-section">
             <h3>Welcome and Good Luck</h3>
             <div class="video-grid">
                 <div class="video-tile" onclick="openVideo('Introduction.mp4')">Introduction</div>
-                <div class="video-tile" onclick="openVideo('Outtro.mp4')">Goodbye</div>
+                <div class="video-tile" onclick="openVideo('Outtro.mp4')">Good Bye</div>
             </div>
         </section>
 
@@ -145,8 +136,8 @@
         <section class="video-section">
             <h3>Searching the Standard Works</h3>
             <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('2HowToSearch_A.mp4')">Searching Word/Phrase</div>
-                <div class="video-tile" onclick="openVideo('2HowToSearch_B.mp4')">Searching Reference</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/uIdObsX5534')">Searching Word/Phrase</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/3MtkdVabLXo')">Searching Reference</div>
             </div>
         </section>
 
@@ -176,15 +167,15 @@
     </div>
 
     <div id="video-overlay" class="overlay" style="display:none;">
-        <div class="popup-content">
+        <div class="popup-content" id="popup-wrapper">
             <button class="close-btn" onclick="closeVideo()">×</button>
-            <video id="main-player" controls autoplay></video>
+            <div class="video-container" id="main-video-container"></div>
         </div>
     </div>
 
     <script>
         function init() {
-            const hasVisited = localStorage.getItem("pwa_user_v3"); // Changed key to force reset during testing
+            const hasVisited = localStorage.getItem("pwa_user_v5");
             if (hasVisited === "true") {
                 document.getElementById('welcome-popup').style.display = 'none';
                 document.getElementById('home-page').style.display = 'block';
@@ -192,22 +183,36 @@
         }
 
         function closeWelcome() {
-            localStorage.setItem("pwa_user_v3", "true");
+            localStorage.setItem("pwa_user_v5", "true");
             document.getElementById('welcome-popup').style.display = 'none';
             document.getElementById('home-page').style.display = 'block';
             document.getElementById('intro-video').pause();
         }
 
-        function openVideo(file) {
-            const player = document.getElementById('main-player');
-            player.src = file;
+        function openVideo(url) {
+            const container = document.getElementById('main-video-container');
+            const wrapper = document.getElementById('popup-wrapper');
+            
+            // Clear previous orientation classes
+            container.classList.remove('portrait');
+
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                // Handling Shorts and Standard YT links
+                let videoId = url.split('v=')[1] || url.split('/').pop().split('?')[0];
+                
+                // Add portrait class if it's a Short for better Desktop viewing
+                if(url.includes('shorts')) container.classList.add('portrait');
+                
+                container.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            } else {
+                container.innerHTML = `<video id="active-player" controls autoplay><source src="${url}" type="video/mp4"></video>`;
+            }
+            
             document.getElementById('video-overlay').style.display = 'flex';
         }
 
         function closeVideo() {
-            const player = document.getElementById('main-player');
-            player.pause();
-            player.src = "";
+            document.getElementById('main-video-container').innerHTML = "";
             document.getElementById('video-overlay').style.display = 'none';
         }
 
