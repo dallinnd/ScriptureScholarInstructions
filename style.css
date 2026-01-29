@@ -53,6 +53,11 @@ ul {
 li {
     margin-bottom: 5px;
 }
+hr {
+    border: 0;
+    border-top: 1px solid #111; /* Subtle gray line */
+    margin: 5px 0; /* Adds spacing above and below the line */
+}
 
 .video-tile:active {
     transform: scale(0.98);
