@@ -149,7 +149,7 @@
             background: var(--trouble-blue);
             color: #ffffff;
             padding: 18px 10px;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
             text-align: center;
             flex: 1 1 calc(50% - 15px);
@@ -324,6 +324,16 @@
             overlay.style.display = 'none';
             document.body.style.overflow = 'auto'; 
         }
+        // Selecting all TOC links that start with #
+          document.querySelectorAll('.toc a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+              e.preventDefault();
+              const targetId = this.getAttribute('href');
+              document.querySelector(targetId).scrollIntoView({
+                behavior: 'smooth'
+              });
+            });
+          });
     </script>
 </body>
 </html>
