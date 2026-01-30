@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Scripture Scholar Guides</title>
+    <title>Scripture Guide PWA</title>
     <style>
         :root {
             --accent-blue: #2563eb;
@@ -35,23 +35,31 @@
 
         .popup-content {
             position: relative;
-            width: 100%;
-            height: 100%;
-            max-width: 500px; /* Locked portrait width for desktop */
-            max-height: 95vh;
+            width: 90%;
+            height: auto;
+            max-width: 500px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
 
+        /* THE FIX: Added max-height to ensure it never exceeds desktop screens */
         .video-container {
             position: relative;
             width: 100%;
             aspect-ratio: 9 / 16;
             background: #000;
+            max-height: 80vh; /* Limits height on desktop */
+            display: flex;
+            justify-content: center;
         }
 
-        iframe { width: 100%; height: 100%; border: none; }
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+        }
 
         /* Close Button Anchored to Top-Right of Video */
         .close-btn {
@@ -84,7 +92,6 @@
         li { margin-bottom: 6px; }
         hr { border: 0; border-top: 1px solid #ddd; margin: 15px 0; }
 
-        /* Responsive Grid: 2 columns on mobile, row on desktop */
         .video-grid { display: flex; flex-wrap: wrap; gap: 15px; }
 
         .video-tile {
@@ -95,7 +102,7 @@
             cursor: pointer;
             text-align: center;
             transition: 0.2s;
-            flex: 1 1 calc(50% - 15px); /* 2 columns on mobile */
+            flex: 1 1 calc(50% - 15px);
             min-width: 140px;
             font-size: 0.9rem;
             display: flex;
@@ -108,6 +115,12 @@
         @media (min-width: 768px) {
             body { padding: 40px; }
             .video-tile { flex: 0 1 300px; font-size: 1rem; }
+            /* On desktop, if the screen is short, the container will shrink to fit */
+            .video-container {
+                width: auto;
+                height: 80vh;
+                aspect-ratio: 9 / 16;
+            }
         }
     </style>
 </head>
@@ -142,11 +155,11 @@
         <section class="video-section">
             <h3>1) Navigating the App</h3>
             <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/8iAiRoe8Tu0?feature=share')">Home Page and Bookmark Page</div>
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/m3zrQsEyPws?feature=share')">Home Page Features</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/8iAiRoe8Tu0')">Home Page and Bookmark Page</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/m3zrQsEyPws')">Home Page Features</div>
             </div>
         </section>
-        
+
         <section class="video-section">
             <h3>2) Searching the Standard Works</h3>
             <div class="video-grid">
@@ -158,16 +171,16 @@
         <section class="video-section">
             <h3>3) Saving Scriptures with Bookmarks</h3>
             <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/v-HabI4GMwY?feature=share')">Saving a Verse</div>
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/jXRBmo74Uzw?feature=share')">Saving Multiple Verses</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/v-HabI4GMwY')">Saving a Verse</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/jXRBmo74Uzw')">Saving Multiple Verses</div>
             </div>
         </section>
 
         <section class="video-section">
             <h3>4) Viewing Chapters and Saved Verses</h3>
             <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/VH99BQfqeO4?feature=share')">Viewing a Chapter</div>
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/ZhOzGeQIBxk?feature=share')">Viewing/Managing Bookmarks</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/VH99BQfqeO4')">Viewing a Chapter</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/ZhOzGeQIBxk')">Viewing/Managing Bookmarks</div>
             </div>
         </section>
 
@@ -178,23 +191,22 @@
                 <hr>
             </div>
             <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/MKqVg20EqZM?feature=share')">Goodbye</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/MKqVg20EqZM')">Goodbye</div>
             </div>
         </section>
 
         <section class="video-section">
             <h3>5) Troubleshooting and Warnings</h3>
             <div class="video-grid">
-                <div class="video-tile" style="background: #808080" onclick="openVideo('https://youtube.com/shorts/mUpFQWWz4p8?feature=share')">Troubleshooting iOS</div>
-                <div class="video-tile" style="background: #808080" onclick="openVideo('https://youtube.com/shorts/Sa_FGbsyJTU?feature=share')">Troubleshooting Android</div>
+                <div class="video-tile" style="background: #808080" onclick="openVideo('https://youtube.com/shorts/mUpFQWWz4p8')">Troubleshooting iOS</div>
+                <div class="video-tile" style="background: #808080" onclick="openVideo('https://youtube.com/shorts/Sa_FGbsyJTU')">Troubleshooting Android</div>
             </div>
         </section>
     </div>
 
     <div id="video-overlay" class="overlay" style="display:none;">
         <div class="popup-content">
-            <div class="video-container" id="main-video-container">
-                </div>
+            <div class="video-container" id="main-video-container"></div>
         </div>
     </div>
 
@@ -205,14 +217,13 @@
             
             let videoId = "";
             if (url.includes('shorts/')) {
-                videoId = url.split('shorts/')[1].split('?')[0];
+                videoId = url.split('shorts/')[1].split('?')[0].split('&')[0];
             } else if (url.includes('v=')) {
                 videoId = url.split('v=')[1].split('&')[0];
             } else {
-                videoId = url.split('/').pop();
+                videoId = url.split('/').pop().split('?')[0];
             }
 
-            // Injects Close Button and Iframe
             container.innerHTML = `
                 <button class="close-btn" onclick="closeVideo()">×</button>
                 <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" 
@@ -220,7 +231,7 @@
                         allowfullscreen></iframe>`;
             
             overlay.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Lock background scroll
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeVideo() {
@@ -228,7 +239,7 @@
             const overlay = document.getElementById('video-overlay');
             container.innerHTML = "";
             overlay.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Restore scroll
+            document.body.style.overflow = 'auto'; 
         }
     </script>
 </body>
