@@ -33,6 +33,7 @@
             left: 0;
             top: 0;
             padding: 20px;
+            padding-left: 40px;
             box-sizing: border-box;
             display: none; /* Hidden on small mobile */
         }
@@ -63,13 +64,18 @@
         }
 
         .video-section { 
-            margin-bottom: 60px; 
+            margin-bottom: 20px; 
             padding-top: 20px; 
             scroll-margin-top: 40px; /* Offset for smooth scroll */
         }
 
         .video-section h3 { border-bottom: 2px solid #eee; padding-bottom: 8px; margin-bottom: 15px; }
-
+        hr { 
+            border: 0; 
+            border-top: 2px solid #fff; 
+            margin: 15px 0; 
+            opacity: 0.0;
+        }
         /* --- Popups & Overlays --- */
         .overlay {
             position: fixed;
@@ -164,18 +170,19 @@
             <li><a href="#saving">3) Saving</a></li>
             <li><a href="#viewing">4) Viewing</a></li>
             <li><a href="#farewell">Farewell</a></li>
-            <li><a href="#troubleshooting">5) Help & Alerts</a></li>
+            <li><a href="#troubleshooting">Troublehshooting</a></li>
         </ul>
     </nav>
 
     <div id="home-page">
-        <h1 style="text-align: center; margin-bottom: 50px;">Scripture Scholar Guides</h1>
+        <h1 style="text-align: center; margin-bottom: 40px;">Scripture Scholar Guides</h1>
         
         <section id="welcome" class="video-section">
             <h3>Welcome</h3>
             <div class="welcome-text-container">
                 <div class="header">Study the Standard Works with the Scripture Scholar App.</div>
             </div>
+            <hr>
             <div class="video-grid" style="margin-bottom: 20px;">
                 <div class="video-tile" onclick="openVideo('https://www.youtube.com/shorts/m-zmU0yraZc')">Introduction Video</div>
             </div>
