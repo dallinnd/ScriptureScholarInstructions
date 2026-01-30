@@ -11,6 +11,7 @@
             --hover-bg: #9e9d9d;
             --close-red: #cc0404;
             --sidebar-width: 250px;
+            --trouble-blue: #5a75b0;
         }
 
         body { 
@@ -73,7 +74,7 @@
         hr { 
             border: 0; 
             border-top: 2px solid #fff; 
-            margin: 15px 0; 
+            margin: 10px 0; 
             opacity: 0.0;
         }
         /* --- Popups & Overlays --- */
@@ -143,8 +144,22 @@
             font-size: 0.9rem;
             transition: 0.2s;
         }
+        
+        .trouble-tile {
+            background: var(--trouble-blue);
+            color: #ffffff;
+            padding: 18px 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            text-align: center;
+            flex: 1 1 calc(50% - 15px);
+            min-width: 140px;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
 
         .video-tile:hover { background: var(--hover-bg); transform: translateY(-2px); }
+        .trouble-tile:hover { background: var(--hover-bg); transform: translateY(-2px); }
 
         /* --- Desktop Media Queries --- */
         @media (min-width: 1024px) {
@@ -162,7 +177,7 @@
 <body>
 
     <nav id="toc">
-        <h2>Guides</h2>
+        <h2>Guide</h2>
         <ul>
             <li><a href="#welcome">Welcome</a></li>
             <li><a href="#navigating">1) Navigating</a></li>
@@ -180,14 +195,14 @@
         <section id="welcome" class="video-section">
             <h3>Welcome</h3>
             <div class="welcome-text-container">
-                <div class="header">Study the Standard Works with the Scripture Scholar App.</div>
+                <div class="header">Study the Standard Works more effectively with the Scripture Scholar App.</div>
             </div>
             <hr>
             <div class="video-grid" style="margin-bottom: 20px;">
                 <div class="video-tile" onclick="openVideo('https://www.youtube.com/shorts/m-zmU0yraZc')">Introduction Video</div>
             </div>
             <div class="welcome-text-container">
-                <p>The first four sections are divided into useful steps:</p>
+                <p>The following four sections are divided into useful steps and features:</p>
                 <hr>
                 <ul>
                     <li>Navigating the App</li>
@@ -234,7 +249,7 @@
         <section id="farewell" class="video-section">
             <h3>Farewell</h3>
             <div class="welcome-text-container">
-                <p>We hope you enjoy the Scripture Scholar App during your personal study.</p>
+                <p>We hope you enjoy the Scripture Scholar App during your personal scripture study.</p>
                 <hr>
             </div>
             <div class="video-grid">
@@ -243,10 +258,10 @@
         </section>
 
         <section id="troubleshooting" class="video-section">
-            <h3>5) Troubleshooting and Warnings</h3>
+            <h3>5)Troubleshooting and Warnings</h3>
             <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/mUpFQWWz4p8')">Troubleshooting iOS</div>
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/Sa_FGbsyJTU')">Troubleshooting Android</div>
+                <div class="trouble-tile" onclick="openVideo('https://youtube.com/shorts/mUpFQWWz4p8')">Troubleshooting iOS</div>
+                <div class="trouble-tile" onclick="openVideo('https://youtube.com/shorts/Sa_FGbsyJTU')">Troubleshooting Android</div>
             </div>
         </section>
     </div>
