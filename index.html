@@ -10,6 +10,7 @@
             --tile-bg: #2563eb;
             --hover-bg: #9e9d9d;
             --close-red: #cc0404;
+            --sidebar-width: 250px;
         }
 
         body { 
@@ -17,11 +18,59 @@
             background: #fcfcfc; 
             color: #111111; 
             margin: 0; 
-            padding: 20px; 
+            display: flex; /* Sidebar layout */
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
-        /* Full-screen Overlay */
+        /* --- Sidebar / Table of Contents --- */
+        #toc {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: #f4f4f4;
+            border-right: 1px solid #ddd;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            display: none; /* Hidden on small mobile */
+        }
+
+        #toc h2 { font-size: 1.2rem; margin-bottom: 20px; color: #333; }
+        
+        #toc ul { list-style: none; padding: 0; }
+        
+        #toc li { margin-bottom: 12px; }
+
+        #toc a {
+            text-decoration: none;
+            color: var(--accent-blue);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+
+        #toc a:hover { opacity: 0.7; }
+
+        /* --- Main Content Area --- */
+        #home-page { 
+            flex: 1;
+            margin-left: 0; /* Default for mobile */
+            padding: 20px;
+            max-width: 800px; /* SLIMMER MAIN COLUMN */
+            margin: 0 auto;
+        }
+
+        .video-section { 
+            margin-bottom: 60px; 
+            padding-top: 20px; 
+            scroll-margin-top: 40px; /* Offset for smooth scroll */
+        }
+
+        .video-section h3 { border-bottom: 2px solid #eee; padding-bottom: 8px; margin-bottom: 15px; }
+
+        /* --- Popups & Overlays --- */
         .overlay {
             position: fixed;
             top: 0; left: 0; 
@@ -36,62 +85,44 @@
         .popup-content {
             position: relative;
             width: 90%;
-            height: auto;
-            max-width: 500px; 
+            max-width: 380px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
-        /* THE FIX: Added max-height to ensure it never exceeds desktop screens */
         .video-container {
             position: relative;
             width: 100%;
             aspect-ratio: 9 / 16;
             background: #000;
-            max-height: 80vh; /* Limits height on desktop */
-            display: flex;
-            justify-content: center;
+            max-height: 85vh; 
+            border-radius: 12px;
+            overflow: hidden;
         }
 
-        iframe { 
-            width: 100%; 
-            height: 100%; 
-            border: none; 
-        }
+        iframe { width: 100%; height: 100%; border: none; }
 
-        /* Close Button Anchored to Top-Right of Video */
         .close-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 15px;
+            right: 15px;
             background: var(--close-red);
             color: white;
             border: 2px solid white;
             border-radius: 50%;
-            width: 42px; 
-            height: 42px;
+            width: 38px; height: 38px;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 10005;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        #home-page { max-width: 1200px; margin: 0 auto; }
-        .video-section { margin-bottom: 40px; }
-        .video-section h3 { border-bottom: 2px solid #eee; padding-bottom: 8px; margin-bottom: 15px; }
-        .welcome-text-container { margin-bottom: 15px; width: 100%; }
-        .header { font-size: 1.15rem; font-weight: bold; }
-        
-        ul { padding-left: 20px; }
-        li { margin-bottom: 6px; }
-        hr { border: 0; border-top: 1px solid #fff; margin: 15px 0; }
-
+        /* --- Tiles --- */
         .video-grid { display: flex; flex-wrap: wrap; gap: 15px; }
 
         .video-tile {
@@ -101,44 +132,53 @@
             border-radius: 25px;
             cursor: pointer;
             text-align: center;
-            transition: 0.2s;
             flex: 1 1 calc(50% - 15px);
             min-width: 140px;
             font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: 0.2s;
         }
 
         .video-tile:hover { background: var(--hover-bg); transform: translateY(-2px); }
 
-        @media (min-width: 768px) {
-            body { padding: 40px; }
-            .video-tile { flex: 0 1 300px; font-size: 1rem; }
-            /* On desktop, if the screen is short, the container will shrink to fit */
-            .video-container {
-                width: auto;
-                height: 80vh;
-                aspect-ratio: 9 / 16;
+        /* --- Desktop Media Queries --- */
+        @media (min-width: 1024px) {
+            #toc { display: block; }
+            #home-page { 
+                margin-left: var(--sidebar-width); 
+                padding: 40px 100px;
+                max-width: 700px; /* Thinner look on large screens */
             }
+            .video-tile { flex: 0 1 280px; }
+            .video-container { height: 85vh; width: auto; aspect-ratio: 9 / 16; }
         }
     </style>
 </head>
 <body>
 
+    <nav id="toc">
+        <h2>Guides</h2>
+        <ul>
+            <li><a href="#welcome">Welcome</a></li>
+            <li><a href="#navigating">1) Navigating</a></li>
+            <li><a href="#searching">2) Searching</a></li>
+            <li><a href="#saving">3) Saving</a></li>
+            <li><a href="#viewing">4) Viewing</a></li>
+            <li><a href="#farewell">Farewell</a></li>
+            <li><a href="#troubleshooting">5) Help & Alerts</a></li>
+        </ul>
+    </nav>
+
     <div id="home-page">
-        <h1 style="text-align: center; margin-bottom: 30px;">Instructions for Scripture Scholar App</h1>
+        <h1 style="text-align: center; margin-bottom: 50px;">Scripture Scholar Guides</h1>
         
-        <section class="video-section">
+        <section id="welcome" class="video-section">
             <h3>Welcome</h3>
             <div class="welcome-text-container">
                 <div class="header">Study the Standard Works with the Scripture Scholar App.</div>
             </div>
-
             <div class="video-grid" style="margin-bottom: 20px;">
                 <div class="video-tile" onclick="openVideo('https://www.youtube.com/shorts/m-zmU0yraZc')">Introduction Video</div>
             </div>
-
             <div class="welcome-text-container">
                 <p>The first four sections are divided into useful steps:</p>
                 <hr>
@@ -152,15 +192,15 @@
             </div>
         </section>
 
-        <section class="video-section">
+        <section id="navigating" class="video-section">
             <h3>1) Navigating the App</h3>
             <div class="video-grid">
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/8iAiRoe8Tu0')">Home Page and Bookmark Page</div>
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/m3zrQsEyPws')">Home Page Features</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/8iAiRoe8Tu0')">Home & Bookmarks</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/m3zrQsEyPws')">App Features</div>
             </div>
         </section>
 
-        <section class="video-section">
+        <section id="searching" class="video-section">
             <h3>2) Searching the Standard Works</h3>
             <div class="video-grid">
                 <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/uIdObsX5534')">Searching Word/Phrase</div>
@@ -168,7 +208,7 @@
             </div>
         </section>
 
-        <section class="video-section">
+        <section id="saving" class="video-section">
             <h3>3) Saving Scriptures with Bookmarks</h3>
             <div class="video-grid">
                 <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/v-HabI4GMwY')">Saving a Verse</div>
@@ -176,15 +216,15 @@
             </div>
         </section>
 
-        <section class="video-section">
+        <section id="viewing" class="video-section">
             <h3>4) Viewing Chapters and Saved Verses</h3>
             <div class="video-grid">
                 <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/VH99BQfqeO4')">Viewing a Chapter</div>
-                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/ZhOzGeQIBxk')">Viewing/Managing Bookmarks</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/ZhOzGeQIBxk')">Managing Bookmarks</div>
             </div>
         </section>
 
-        <section class="video-section">
+        <section id="farewell" class="video-section">
             <h3>Farewell</h3>
             <div class="welcome-text-container">
                 <p>We hope you enjoy the Scripture Scholar App during your personal study.</p>
@@ -195,11 +235,11 @@
             </div>
         </section>
 
-        <section class="video-section">
+        <section id="troubleshooting" class="video-section">
             <h3>5) Troubleshooting and Warnings</h3>
             <div class="video-grid">
-                <div class="video-tile" style="background: #808080" onclick="openVideo('https://youtube.com/shorts/mUpFQWWz4p8')">Troubleshooting iOS</div>
-                <div class="video-tile" style="background: #808080" onclick="openVideo('https://youtube.com/shorts/Sa_FGbsyJTU')">Troubleshooting Android</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/mUpFQWWz4p8')">Troubleshooting iOS</div>
+                <div class="video-tile" onclick="openVideo('https://youtube.com/shorts/Sa_FGbsyJTU')">Troubleshooting Android</div>
             </div>
         </section>
     </div>
