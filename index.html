@@ -111,17 +111,6 @@
 </head>
 <body>
 
-    <div id="welcome-popup" class="overlay">
-        <div class="popup-content">
-            <button class="close-btn" onclick="closeWelcome()">×</button>
-            <div class="video-container">
-                <video id="intro-video" controls>
-                    <source src="Introduction.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
-    </div>
-
     <div id="home-page" style="display:none;">
         <h1 style="text-align: center; margin-bottom: 50px;">Instructions for Scripture Scholar App</h1>
         
@@ -129,6 +118,11 @@
             <h3>Welcome to the Scripture Scholar Ap</h3>
             <div class="welcome-text-container">
                 <div class="header">The primary purpose of this app is to assist you in your study of the official Canon of the Church of Jesus Christ of Latter-day Saints, referred to as the Standard Works.</div>
+            </div>
+            <div class="video-grid">
+                <div class="video-tile" onclick="openVideo('https://www.youtube.com/shorts/m-zmU0yraZc')">Introduction Video</div>
+            </div>
+            <div class="welcome-text-container">
                 <p>The first four sections are divided into useful steps and features:</p>
                 <hr>
                 <ul>
@@ -138,9 +132,6 @@
                     <li>Viewing Chapters and Saved Verses</li>
                 </ul>
                 <hr>
-            </div>
-            <div class="video-grid">
-                <div class="video-tile" style="background: #808080" onclick="openVideo('https://www.youtube.com/shorts/m-zmU0yraZc')">Rewatch Introduction Video</div>
             </div>
         </section>
 
