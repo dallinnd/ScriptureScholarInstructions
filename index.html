@@ -294,46 +294,50 @@
     </div>
 
     <script>
-        function openVideo(url) {
-            const container = document.getElementById('main-video-container');
-            const overlay = document.getElementById('video-overlay');
-            
-            let videoId = "";
-            if (url.includes('shorts/')) {
-                videoId = url.split('shorts/')[1].split('?')[0].split('&')[0];
-            } else if (url.includes('v=')) {
-                videoId = url.split('v=')[1].split('&')[0];
-            } else {
-                videoId = url.split('/').pop().split('?')[0];
+    function openVideo(url) {
+        const container = document.getElementById('main-video-container');
+        const overlay = document.getElementById('video-overlay');
+        
+        let videoId = "";
+        if (url.includes('shorts/')) {
+            videoId = url.split('shorts/')[1].split('?')[0].split('&')[0];
+        } else if (url.includes('v=')) {
+            videoId = url.split('v=')[1].split('&')[0];
+        } else {
+            videoId = url.split('/').pop().split('?')[0];
+        }
+
+        container.innerHTML = `
+            <button class="close-btn" onclick="closeVideo()">×</button>
+            <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen></iframe>`;
+        
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeVideo() {
+        const container = document.getElementById('main-video-container');
+        const overlay = document.getElementById('video-overlay');
+        container.innerHTML = "";
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto'; 
+    }
+
+    // SMOOTH SCROLL LOGIC
+    document.querySelectorAll('#toc a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
             }
-
-            container.innerHTML = `
-                <button class="close-btn" onclick="closeVideo()">×</button>
-                <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" 
-                        allow="autoplay; encrypted-media" 
-                        allowfullscreen></iframe>`;
-            
-            overlay.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; 
-        }
-
-        function closeVideo() {
-            const container = document.getElementById('main-video-container');
-            const overlay = document.getElementById('video-overlay');
-            container.innerHTML = "";
-            overlay.style.display = 'none';
-            document.body.style.overflow = 'auto'; 
-        }
-        // Selecting all TOC links that start with #
-          document.querySelectorAll('.toc a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-              e.preventDefault();
-              const targetId = this.getAttribute('href');
-              document.querySelector(targetId).scrollIntoView({
-                behavior: 'smooth'
-              });
-            });
-          });
+        });
+    });
     </script>
 </body>
 </html>
