@@ -129,6 +129,37 @@
             z-index: 10005;
         }
 
+        .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10010;
+        transition: background 0.2s;
+        }
+
+        .nav-btn:hover { background: var(--accent-blue); }
+
+        .prev-btn { left: -60px; } /* Outside container on desktop */
+        .next-btn { right: -60px; }
+
+        /* Mobile adjustments: Move buttons inside the screen slightly */    
+        @media (max-width: 600px) {
+            .prev-btn { left: 10px; }
+            .next-btn { right: 10px; }
+            .nav-btn { width: 40px; height: 40px; background: rgba(0, 0, 0, 0.3); }
+        }
+
         /* --- Tiles --- */
         .video-grid { display: flex; flex-wrap: wrap; gap: 15px; }
 
@@ -303,33 +334,74 @@
     </div>
 
     <div id="video-overlay" class="overlay" style="display:none;">
-        <div class="popup-content">
+        <div class="popup-content" id="swipe-container">
+            <button class="nav-btn prev-btn" onclick="changeVideo(-1)" aria-label="Previous">❮</button>
+            <button class="nav-btn next-btn" onclick="changeVideo(1)" aria-label="Next">❯</button>
+        
             <div class="video-container" id="main-video-container"></div>
         </div>
     </div>
 
     <script>
+    let currentVideoIndex = -1;
+    let videoLinks = [];
+
+    // Initialize video list from all tiles on the page
+    function initVideoList() {
+        videoLinks = Array.from(document.querySelectorAll('.video-tile, .trouble-tile')).map(tile => {
+            // Extract the URL from the onclick string
+            const onclick = tile.getAttribute('onclick');
+            return onclick.match(/'([^']+)'/)[1];
+        });
+    }
+
     function openVideo(url) {
+        if (videoLinks.length === 0) initVideoList();
+        currentVideoIndex = videoLinks.indexOf(url);
+
         const container = document.getElementById('main-video-container');
         const overlay = document.getElementById('video-overlay');
-        
-        let videoId = "";
-        if (url.includes('shorts/')) {
-            videoId = url.split('shorts/')[1].split('?')[0].split('&')[0];
-        } else if (url.includes('v=')) {
-            videoId = url.split('v=')[1].split('&')[0];
-        } else {
-            videoId = url.split('/').pop().split('?')[0];
-        }
+    
+        let videoId = extractId(url);
 
         container.innerHTML = `
             <button class="close-btn" onclick="closeVideo()">×</button>
-            <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" 
-                    allow="autoplay; encrypted-media" 
-                    allowfullscreen></iframe>`;
-        
+            <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
+                    allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    
         overlay.style.display = 'flex';
         document.body.style.overflow = 'hidden'; 
+    }
+
+    function extractId(url) {
+        if (url.includes('shorts/')) return url.split('shorts/')[1].split(/[?&]/)[0];
+        if (url.includes('v=')) return url.split('v=')[1].split('&')[0];
+        return url.split('/').pop().split(/[?&]/)[0];
+    }
+
+    function changeVideo(direction) {
+        currentVideoIndex += direction;
+        // Loop around logic
+        if (currentVideoIndex >= videoLinks.length) currentVideoIndex = 0;
+        if (currentVideoIndex < 0) currentVideoIndex = videoLinks.length - 1;
+    
+        openVideo(videoLinks[currentVideoIndex]);
+    }
+
+    // --- SWIPE LOGIC ---
+    let touchstartX = 0;
+    let touchendX = 0;
+
+    const swipeContainer = document.getElementById('swipe-container');
+    swipeContainer.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
+    swipeContainer.addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenX;
+        handleGesture();
+    });
+
+    function handleGesture() {
+        if (touchendX < touchstartX - 50) changeVideo(1);  // Swipe Left -> Next
+        if (touchendX > touchstartX + 50) changeVideo(-1); // Swipe Right -> Prev
     }
 
     function closeVideo() {
