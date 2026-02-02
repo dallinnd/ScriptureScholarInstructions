@@ -85,7 +85,6 @@
 
         iframe { width: 100%; height: 100%; border: none; }
 
-        /* Modernized Nav Buttons */
         .nav-btn, .close-btn {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(8px);
@@ -97,7 +96,7 @@
             display: flex; align-items: center; justify-content: center;
             transition: all 0.2s ease;
             outline: none;
-            -webkit-tap-highlight-color: transparent; /* Removes blue flash on mobile */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .nav-btn {
@@ -105,7 +104,6 @@
             top: 50%;
             transform: translateY(-50%);
             width: 48px; height: 48px;
-            font-size: 22px;
             z-index: 10010;
         }
 
@@ -113,16 +111,18 @@
         .prev-btn { left: -70px; }
         .next-btn { right: -70px; }
 
+        /* Updated Modern Close Button */
         .close-btn {
             position: absolute;
-            top: 15px; right: 0px;
             background: var(--close-red);
-            width: 36px; height: 36px;
-            font-size: 24px;
+            width: 48px; height: 48px; /* Matched to nav buttons */
+            font-size: 28px;
             font-weight: 300;
-            z-index: 10005;
+            z-index: 10020;
             border: none;
         }
+
+        .close-btn:active { transform: scale(0.95); }
 
         /* --- Tiles with Subtle Gradients --- */
         .video-grid { display: flex; flex-wrap: wrap; gap: 15px; }
@@ -143,10 +143,17 @@
         .trouble-tile { background: var(--trouble-bg); font-size: 0.9rem; }
         .video-tile:hover, .trouble-tile:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); opacity: 0.9; }
 
-        @media (max-width: 768px) {
+        /* Responsive Close Button & Nav Positioning */
+        @media (max-width: 1023px) {
             .prev-btn { left: 10px; }
             .next-btn { right: 10px; }
-            .nav-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.1); }
+            .nav-btn { width: 40px; height: 40px; background: rgba(255, 255, 255, 0.1); }
+            .close-btn { 
+                top: 10px; 
+                right: 10px; 
+                width: 40px; height: 40px; 
+                background: rgba(204, 4, 4, 0.85); 
+            }
         }
 
         @media (min-width: 1024px) {
@@ -154,6 +161,7 @@
             #home-page { margin-left: var(--sidebar-width); padding: 40px 100px; max-width: 700px; }
             .video-tile, .trouble-tile { flex: 0 1 280px; }
             .video-container { height: 85vh; width: auto; aspect-ratio: 9 / 16; }
+            .close-btn { top: 0; right: -70px; } /* To the right of video on desktop */
         }
     </style>
 </head>
@@ -252,6 +260,7 @@
             <button class="nav-btn next-btn" onclick="changeVideo(1)" aria-label="Next" style="padding-left: 6px;">
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
             </button>
+            
             <div class="video-container" id="main-video-container"></div>
         </div>
     </div>
@@ -273,17 +282,24 @@
 
         const container = document.getElementById('main-video-container');
         const overlay = document.getElementById('video-overlay');
+        const swipeContainer = document.getElementById('swipe-container');
         let videoId = extractId(url);
 
         container.innerHTML = `
-            <button class="close-btn" onclick="closeVideo()">×</button>
             <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" 
                     allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
         
+        // Ensure the close button exists as a sibling to position correctly
+        if (!document.querySelector('.close-btn')) {
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'close-btn';
+            closeBtn.innerHTML = '×';
+            closeBtn.onclick = closeVideo;
+            swipeContainer.appendChild(closeBtn);
+        }
+        
         overlay.style.display = 'flex';
         document.body.style.overflow = 'hidden'; 
-        
-        // Remove focus from button to prevent color "sticking"
         document.activeElement.blur();
     }
 
@@ -313,6 +329,8 @@
 
     function closeVideo() {
         document.getElementById('main-video-container').innerHTML = "";
+        const closeBtn = document.querySelector('.close-btn');
+        if (closeBtn) closeBtn.remove();
         document.getElementById('video-overlay').style.display = 'none';
         document.body.style.overflow = 'auto'; 
     }
